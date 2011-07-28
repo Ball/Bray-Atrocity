@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>TechDemo</title>
+	<style>
+	  canvas#spriteLayer{
+	    position: absolute;
+	    top: 20px;
+	    left: 20px;
+	    width: 800px;
+	    height: 600px;
+	  }
+	</style>
+  <script type="text/javascript"
+          src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js">
+  </script>
+	<script type="text/javascript">
+	
+    var creep = {location: { x: 200, y: 200},
+                 destination: {x: 200, y: 200}}
+    var renderTimer;
+    function renderLoop(){
+      $("#spriteLayer").each(function(){
+        var context = this.getContext('2d');
+        context.clearRect(0,0,800,600);
+        context.fillStyle ="#eee";
+        context.strokeRect( creep.location.x-5, creep.location.y-5, 10, 10 );
+        context.fillRect( creep.location.x-5, creep.location.y-5, 10, 10 );
+      });
+    }
+    $(document).ready(function(){
+       renderLoop();
+       $("#spriteLayer").mousedown(function(e){
+         creep.destination = {x: e.offsetX, y: e.offsetY};
+         creep.location = creep.destination;
+       });
+       renderTimer = setInterval(renderLoop, 1000);
+    });	
+	</script>
+</head>
+
+<body>
+  <canvas id="spriteLayer" width="800" height="600">
+  </canvas>
+</body>
+</html>
