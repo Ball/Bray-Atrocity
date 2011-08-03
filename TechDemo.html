@@ -2,27 +2,30 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>TechDemo</title>
-	<style>
-	  canvas#spriteLayer{
-	    position: absolute;
-	    top: 20px;
-	    left: 20px;
-	    width: 800px;
-	    height: 600px;
-	  }
-	</style>
+        <title>TechDemo</title>
+        <style>
+          canvas#spriteLayer{
+          }
+          div#gameField{
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border-color: black;
+            border-weight: 1px;
+            border-style: solid;
+          }
+        </style>
   <script type="text/javascript"
           src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js">
   </script>
-  <script type="text/javascript"
-          src="creeper.js">
-	<script type="text/javascript">
-	
-    var creep = {location: { x: 200, y: 200},
-                 destination: {x: 200, y: 200}}
+  <script type="text/javascript" src="creeper.js"></script>
+  <script type="text/javascript">
+        
+    var creep = new Creeper({ x: 200, y: 200});
+    var mouseDown = 0;
     var renderTimer;
     function renderLoop(){
+      creep.step();
       $("#spriteLayer").each(function(){
         var context = this.getContext('2d');
         context.clearRect(0,0,800,600);
@@ -33,17 +36,29 @@
     }
     $(document).ready(function(){
        renderLoop();
+       $("#spriteLayer").mousemove(function(e){
+         if(mouseDown){
+           creep.destination = {x:e.offsetX, y: e.offsetY};
+         }
+       });
+       $("#spriteLayer").mousedown(function(e){
+         mouseDown++;
+       });
        $("#spriteLayer").mousedown(function(e){
          creep.destination = {x: e.offsetX, y: e.offsetY};
-         creep.location = creep.destination;
        });
-       renderTimer = setInterval(renderLoop, 1000);
-    });	
-	</script>
+       $("#spriteLayer").mouseup(function(e){
+         mouseDown--;
+       });
+       renderTimer = setInterval(renderLoop, 100);
+    }); 
+  </script>
 </head>
 
 <body>
-  <canvas id="spriteLayer" width="800" height="600">
-  </canvas>
+  <div id="gameField">
+    <canvas id="spriteLayer" width="800" height="600">
+    </canvas>
+  </div>
 </body>
 </html>

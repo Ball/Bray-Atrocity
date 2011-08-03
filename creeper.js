@@ -8,13 +8,12 @@ Creeper.prototype = {
 		var opposite = (this.destination.y - this.location.y);
 		var adjacent = (this.destination.x - this.location.x);
 		var h1 = Math.sqrt(opposite*opposite + adjacent*adjacent);
-		alert("adjacent:" + adjacent + " opposite:"+opposite+" h1:"+h1)
 		if(h1 <= this.speed){
 			this.location = this.destination;
 			return;
 		}
-		var moveOpposite = opposite * (h1 / this.speed);
-		var moveAdjacent = adjacent * (h1 / this.speed);
+		var moveOpposite = opposite * (this.speed / h1);
+		var moveAdjacent = adjacent * (this.speed / h1);
 		this.location = {x: this.location.x + moveAdjacent, y: this.location.y + moveOpposite};
 	}
 }
