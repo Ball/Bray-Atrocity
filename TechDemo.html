@@ -20,8 +20,17 @@
   </script>
   <script type="text/javascript" src="creeper.js"></script>
   <script type="text/javascript">
-        
+    
+    var terrain = [{x:300, y:210},
+                   {x:300, y:220},
+                   {x:300, y:230},
+                   {x:300, y:240},
+                   {x:300, y:250},
+                   {x:300, y:260},
+                   {x:300, y:270}];    
     var creep = new Creeper({ x: 200, y: 200});
+    creep.terrain = terrain;
+    
     var mouseDown = 0;
     var renderTimer;
     function renderLoop(){
@@ -32,6 +41,12 @@
         context.fillStyle ="#eee";
         context.strokeRect( creep.location.x-5, creep.location.y-5, 10, 10 );
         context.fillRect( creep.location.x-5, creep.location.y-5, 10, 10 );
+        context.fillStyle = "#cd853f";
+        for(var index in terrain){
+          var block = terrain[index];
+          context.strokeRect( block.x, block.y, 10, 10);
+          context.fillRect( block.x, block.y, 10, 10);
+        }
       });
     }
     $(document).ready(function(){
@@ -41,14 +56,16 @@
            creep.destination = {x:e.offsetX, y: e.offsetY};
          }
        });
+
+       // TODO : Mouse down/up should be on a document basis.  Incase I slide off the canvas
        $("#spriteLayer").mousedown(function(e){
          mouseDown++;
        });
-       $("#spriteLayer").mousedown(function(e){
-         creep.destination = {x: e.offsetX, y: e.offsetY};
-       });
        $("#spriteLayer").mouseup(function(e){
          mouseDown--;
+       });
+       $("#spriteLayer").mousedown(function(e){
+         creep.destination = {x: e.offsetX, y: e.offsetY};
        });
        renderTimer = setInterval(renderLoop, 100);
     }); 

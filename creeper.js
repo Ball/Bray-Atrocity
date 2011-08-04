@@ -2,6 +2,7 @@ Creeper = function(location){
 	this.location = location;
 	this.destination = location;
 	this.speed = 10;
+	this.terrain = [];
 };
 Creeper.prototype = {
 	step : function(){
