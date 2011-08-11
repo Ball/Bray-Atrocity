@@ -19,6 +19,7 @@
           src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js">
   </script>
   <script type="text/javascript" src="creeper.js"></script>
+  <script type="text/javascript" src="terrain.js"></script>
   <script type="text/javascript">
     
     var terrain = [{x:300, y:210},
@@ -29,7 +30,7 @@
                    {x:300, y:260},
                    {x:300, y:270}];    
     var creep = new Creeper({ x: 200, y: 200});
-    creep.terrain = terrain;
+    creep.terrain = new Terrain(terrain);
     
     var mouseDown = 0;
     var renderTimer;

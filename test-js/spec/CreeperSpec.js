@@ -49,11 +49,11 @@ describe("Creeper", function(){
 
 	describe("Moving a creeper around terrain", function(){
 		beforeEach(function(){
-			this.creep.terrain = [{x:200, y:210}];
+			this.creep.terrain = new Terrain( [{x:200, y:210}] );
 			this.creep.destination = {x:200, y:250};
 		});
 	  it("Steps when terrain is far off", function(){
-		  this.creep.terrain = [{x:200, y:230}];
+		  this.creep.terrain = new Terrain( [{x:200, y:230}] );
 		  this.creep.step();
 	    expect(this.creep.location).toEqual({x:200, y:210});		
 	  });
@@ -63,8 +63,9 @@ describe("Creeper", function(){
 		  this.creep.step();
 		  expect(this.creep.location).toEqual(originalLocation);
 	  });
-	  xit("Steps to the right when the terrain is adjacent", function(){
+	  it("Steps to the right when the terrain is adjacent", function(){
 		  this.creep.step();
+		  expect(this.creep.location).toEqual({x:210, y:200});
 	  });
 	});
 });
