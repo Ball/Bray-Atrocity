@@ -35,7 +35,9 @@
     var mouseDown = 0;
     var renderTimer;
     function renderLoop(){
+      
       creep.step();
+      
       $("#spriteLayer").each(function(){
         var context = this.getContext('2d');
         context.clearRect(0,0,800,600);
