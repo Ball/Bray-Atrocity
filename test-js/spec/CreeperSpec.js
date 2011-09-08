@@ -72,7 +72,7 @@ describe("Creeper", function(){
 		  this.creep.location = {x: 205, y:205};
 		  this.creep.destination = {x: 250, y: 250};
 		  this.creep.step();
- 		  expect(this.creep.location).toEqual({x:205, y:195});
+ 		  expect(this.creep.location).toEqual({x:212.07, y:197.93});
 	  });
 	  it("steps to the right when adjacent left-right", function(){
 		  this.creep.terrain = new Terrain([{x:210,y:200}]);
@@ -80,7 +80,7 @@ describe("Creeper", function(){
 		  this.creep.step();
 		  expect(this.creep.location).toEqual({x:200,y:190});
 	  });
-	  xit("bug - doesn't step around a long wall at a steep angle", function(){
+	  it("bug - doesn't step around a long wall at a steep angle", function(){
 		  this.creep.terrain = new Terrain([{x:300, y:210},
 	                   {x:300, y:220},
 	                   {x:300, y:230},
