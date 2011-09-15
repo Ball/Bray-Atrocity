@@ -8,6 +8,13 @@ Sprite.prototype =
     setFillStyle: function(context){
       context.fillStyle = "#000";
     },
+    isColliding: function(loc){
+      if(Math.abs(loc.x - this.location.x) <= 5
+         && Math.abs(loc.y - this.location.y) <= 5){
+        return true;
+      }
+      return false;
+    },
     drawOnScreen: function(context){
       context.strokeRect(this.location.x-5, this.location.y-5, 10, 10);
       context.fillRect(this.location.x-5, this.location.y-5, 10, 10);

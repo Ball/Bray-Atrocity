@@ -94,5 +94,14 @@ describe("Creeper", function(){
 	    expect(this.creep.terrain.isColliding(this.creep.location)).toBeFalsy();
 	    expect(this.creep.destination).toEqual({x:320, y:271});
 	  });
+    it("should not move when stepping on a monster", function(){
+      this.creep.monsters = [new Sprite({x: 100, y: 100})];
+      this.creep.location = {x:200, y:200};
+      this.creep.moveTo({x:100, y:100});
+      this.creep.step();
+      expect(this.creep.monsters[0].isColliding({x:100, y:100})).toBeTruthy();
+      expect(this.creep.destination).toEqual({x:200, y:200});
+      expect(this.creep.location).toEqual({x:200, y:200});
+    });
 	});
 });

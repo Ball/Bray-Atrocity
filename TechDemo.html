@@ -31,7 +31,11 @@
                    {x:300, y:250},
                    {x:300, y:260},
                    {x:300, y:270}]);    
+    var targets = [new Sprite({x: 100, y: 100}),
+                   new Sprite({x: 400, y: 300})
+                  ];
     var creep = new Creeper({ x: 200, y: 200});
+    creep.monsters = targets;
     creep.terrain = terrain;
     
     var mouseDown = 0;
@@ -43,16 +47,18 @@
       $("#spriteLayer").each(function(){
         var context = this.getContext('2d');
         context.clearRect(0,0,800,600);
-	terrain.render(context);
-	creep.render(context);
+	      terrain.render(context);
+	      creep.render(context);
+        for(var i in targets){
+          targets[i].render(context);
+        }
       });
     }
     $(document).ready(function(){
        renderLoop();
        $("#spriteLayer").mousemove(function(e){
-	 if(mouseDown){
-           // TODO : should call a different function - update thing
-	   creep.moveTo({x:e.offsetX, y: e.offsetY});
+	       if(mouseDown){
+		       creep.moveTo({x:e.offsetX, y: e.offsetY});
          }
        });
 
@@ -61,12 +67,10 @@
          mouseDown++;
        });
        $("#spriteLayer").mouseup(function(e){
-	 // TODO : tell creeper to reset shoot / move state
-	 mouseDown--;
-	 // TODO : Maybe mouseDown = 0;???
+	       mouseDown--;
        });
        $("#spriteLayer").mousedown(function(e){
-	 creep.moveTo({x: e.offsetX, y: e.offsetY});
+	       creep.moveTo({x: e.offsetX, y: e.offsetY});
        });
        renderTimer = setInterval(renderLoop, 100);
     }); 

@@ -4,6 +4,7 @@ Creeper = function(location){
   this.destination = location;
   this.speed = 10;
   this.terrain = new Terrain([]);
+  this.monsters = [];
 };
 
 Creeper.prototype =
@@ -12,6 +13,31 @@ Creeper.prototype =
     __proto__: Sprite.prototype,
     setFillStyle: function(context){
       context.fillStyle = "#eee";
+    },
+    drawOnScreen: function(context){
+       context.strokeRect(this.location.x-5, this.location.y-5, 10, 10);
+       context.fillRect(this.location.x-5, this.location.y-5, 10, 10);
+       if(this.target != undefined){
+         context.beginPath();
+         context.moveTo(this.location.x, this.location.y);
+         context.lineTo(this.target.x, this.target.y);
+         context.closePath();
+         context.stroke();
+         this.target = undefined;
+       }
+    },
+    shootAt: function(location){
+      this.target = location;
+    },
+    moveTo: function(location){
+      for(var i in this.monsters){
+        if(this.monsters[i].isColliding(location)){
+          this.destination = this.location;
+          this.shootAt(location);
+          return;
+        }
+      }
+      this.destination = location;
     },
     stepSide: function(theta,isPlus){
       if(isPlus){
