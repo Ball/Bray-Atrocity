@@ -7,6 +7,14 @@ Creeper = function(location){
 };
 
 Creeper.prototype = {
+	render: function(context){
+	  context.fillStyle ="#eee";
+          context.strokeRect( this.location.x-5, this.location.y-5, 10, 10 );
+          context.fillRect( this.location.x-5, this.location.y-5, 10, 10 );
+	},
+	moveTo: function(point){
+          this.destination = point;
+	},
 	round: function(number){
 		return Math.round(100.0*number)/100.0;
 	},
@@ -61,7 +69,6 @@ Creeper.prototype = {
 		else{
 			return this.stepSide(theta, true);
 		}
-//		return this.firstStepNotColliding(newStep.x, newStep.y, newStep.theta);
 	},
 	step: function(){
 		var temp = this.guessStep(this.location, this.destination);

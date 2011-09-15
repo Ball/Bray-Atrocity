@@ -22,15 +22,16 @@
   <script type="text/javascript" src="terrain.js"></script>
   <script type="text/javascript">
     
-    var terrain = [{x:300, y:210},
+    var terrain = new Terrain([
+                   {x:300, y:210},
                    {x:300, y:220},
                    {x:300, y:230},
                    {x:300, y:240},
                    {x:300, y:250},
                    {x:300, y:260},
-                   {x:300, y:270}];    
+                   {x:300, y:270}]);    
     var creep = new Creeper({ x: 200, y: 200});
-    creep.terrain = new Terrain(terrain);
+    creep.terrain = terrain;
     
     var mouseDown = 0;
     var renderTimer;
@@ -41,22 +42,16 @@
       $("#spriteLayer").each(function(){
         var context = this.getContext('2d');
         context.clearRect(0,0,800,600);
-        context.fillStyle = "#cd853f";
-        for(var index in terrain){
-          var block = terrain[index];
-          context.strokeRect( block.x, block.y, 10, 10);
-          context.fillRect( block.x, block.y, 10, 10);
-        }
-        context.fillStyle ="#eee";
-        context.strokeRect( creep.location.x-5, creep.location.y-5, 10, 10 );
-        context.fillRect( creep.location.x-5, creep.location.y-5, 10, 10 );
+	terrain.render(context);
+	creep.render(context);
       });
     }
     $(document).ready(function(){
        renderLoop();
        $("#spriteLayer").mousemove(function(e){
-         if(mouseDown){
-           creep.destination = {x:e.offsetX, y: e.offsetY};
+	 if(mouseDown){
+           // TODO : should call a different function - update thing
+	   creep.moveTo({x:e.offsetX, y: e.offsetY});
          }
        });
 
@@ -65,10 +60,12 @@
          mouseDown++;
        });
        $("#spriteLayer").mouseup(function(e){
-         mouseDown--;
+	 // TODO : tell creeper to reset shoot / move state
+	 mouseDown--;
+	 // TODO : Maybe mouseDown = 0;???
        });
        $("#spriteLayer").mousedown(function(e){
-         creep.destination = {x: e.offsetX, y: e.offsetY};
+	 creep.moveTo({x: e.offsetX, y: e.offsetY});
        });
        renderTimer = setInterval(renderLoop, 100);
     }); 
